@@ -26,14 +26,14 @@ public class TrataImagem {
         this.vision = vision;
     }   
 
-    private byte[] carregaImagem(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
-        byte[] data = Files.readAllBytes(path); //readAllBytes lê todos os bytes de path.
+    private byte[] carregaImagem(Path fileName) throws IOException {
+        //Path path = Paths.get(fileName);
+        byte[] data = Files.readAllBytes(fileName); //readAllBytes lê todos os bytes de path.
         //return ByteString.copyFrom(data);
         return data;
     }
 
-    public List<EntityAnnotation> constroiImg(String fileName) throws IOException {
+    public List<EntityAnnotation> constroiImg(Path fileName) throws IOException {
 
         //ByteString imgBytes = carregaImagem(fileName);
         byte[] img = carregaImagem(fileName);
@@ -71,24 +71,6 @@ public class TrataImagem {
     }
 
     public static void exibeResultado(List<EntityAnnotation> labels) {
-//        for (AnnotateImageResponse res : responses) {
-//            if (res.hasError()) {
-//                System.out.printf("Error: %s\n", res.getError().getMessage());
-//                return;
-//            }
-//
-//            for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-//                /*String L = (String) annotation.getDescription();
-//          if(L.equals("rafaely")){
-//              System.out.printf("achei : %s\n", L);
-//          }else{
-//              System.out.printf("Não achei\n");
-//          }*/
-//                annotation.getAllFields().forEach((k, v) -> System.out.printf("%s : %s\n", k, v.toString()));
-//            }
-//        }
-        
-        //System.out.printf("Labels for image %s:\n", imagePath);
             for (EntityAnnotation label : labels) {
               System.out.printf(
                   "\t%s (score: %.3f)\n",

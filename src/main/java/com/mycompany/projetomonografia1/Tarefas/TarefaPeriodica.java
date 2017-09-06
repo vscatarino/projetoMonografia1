@@ -2,6 +2,8 @@ package com.mycompany.projetomonografia1.Tarefas;
 
 import com.mycompany.projetomonografia1.Modelo.Imagem;
 import com.mycompany.projetomonografia1.TrataImagem;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,7 +36,8 @@ public class TarefaPeriodica {
                             img.tarefaMontaListaExecutavel(imgsProcessaveis);
                             for(int i = 0; i < imgsProcessaveis.size();i++){
                                 String str = imgsProcessaveis.get(i);
-                                TrataImagem.exibeResultado(ti.constroiImg(str));
+                                Path path = Paths.get(imgsProcessaveis.get(i));
+                                TrataImagem.exibeResultado(ti.constroiImg(path));
                             }
                             
                     } catch (Exception e) {

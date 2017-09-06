@@ -22,7 +22,7 @@ public class TarefaVision implements Runnable {
         
         while(true){
             for(int i=0 ; i < imgsProcessaveis.size(); i++){
-                System.out.println(imgsProcessaveis.get(i));
+                //System.out.println(imgsProcessaveis.get(i));
                 System.out.println("vlw");
             }
             //});

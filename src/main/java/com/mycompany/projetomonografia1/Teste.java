@@ -21,14 +21,14 @@ public class Teste {
     private static final String APPLICATION_NAME = "VisionLabelSample/1.0";
 
     public static void main(String[] args) throws IOException, GeneralSecurityException {
-        Imagem img = new Imagem("/home/vinicius/NetBeansProjects/projetoMonografia1/img-");
+        Imagem img = new Imagem("/home/pi/Documents/Monografia/projetoMonografia1/img-");
 //        //ExecutorService threadPool = Executors.newFixedThreadPool(4);
         
         TrataImagem ti = new TrataImagem(getVisionService());
 
         List<String> imgsProcessaveis = new ArrayList();
-         Runnable tarefaVision = new TarefaVision(img, imgsProcessaveis);
-        new Thread(tarefaVision).start();
+//        Runnable tarefaVision = new TarefaVision(img, imgsProcessaveis);
+//        new Thread(tarefaVision).start();
         TarefaPeriodica mt = new TarefaPeriodica(img,ti, imgsProcessaveis);
         mt.tarefa();
         
