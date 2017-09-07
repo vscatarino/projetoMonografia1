@@ -7,6 +7,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.vision.v1.Vision;
 import com.google.api.services.vision.v1.VisionScopes;
 import com.mycompany.projetomonografia1.Modelo.Imagem;
+import com.mycompany.projetomonografia1.Tarefas.TarefaLista;
 import com.mycompany.projetomonografia1.Tarefas.TarefaPeriodica;
 import com.mycompany.projetomonografia1.Tarefas.TarefaVision;
 
@@ -23,23 +24,16 @@ public class Teste {
     public static void main(String[] args) throws IOException, GeneralSecurityException {
         Imagem img = new Imagem("/home/vinicius/NetBeansProjects/projetoMonografia1/img-");
 //        //ExecutorService threadPool = Executors.newFixedThreadPool(4);
-        
+
         TrataImagem ti = new TrataImagem(getVisionService());
 
         List<String> imgsProcessaveis = new ArrayList();
-         Runnable tarefaVision = new TarefaVision(img, imgsProcessaveis);
-        new Thread(tarefaVision).start();
-        TarefaPeriodica mt = new TarefaPeriodica(img,ti, imgsProcessaveis);
-        mt.tarefa();
-        
-       
-       
-       
 
-//        Runnable tarefaVision = new TarefaVision(img, ti, imgsProcessaveis);
-//        //threadPool.execute(tarefaVision);
-//        new Thread(tarefaVision).start();
-//        
+        
+        new Thread(new TarefaLista(img,imgsProcessaveis)).start();
+        new Thread(new TarefaVision(img, ti, imgsProcessaveis)).start();
+//        TarefaPeriodica mt = new TarefaPeriodica(img, ti, imgsProcessaveis);
+//        mt.tarefa();
     }
 
     public static Vision getVisionService() throws IOException, GeneralSecurityException {

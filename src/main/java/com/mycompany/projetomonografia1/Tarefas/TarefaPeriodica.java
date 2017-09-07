@@ -8,20 +8,20 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 
 public class TarefaPeriodica {
-
+    
     Imagem img;
     TrataImagem ti;
     List<String> imgsProcessaveis;
     //ExecutorService threadPool;
-    public static final long TEMPO = (1000 * 10); // refaz a tarefa a cada 10 segundos.
+    public static final long TEMPO = (1000 * 5); // refaz a tarefa a cada 10 segundos.
 
-    public TarefaPeriodica(Imagem img,TrataImagem ti, List<String> imgsProcessaveis/*, ExecutorService threadPool*/) {
+    public TarefaPeriodica(Imagem img, TrataImagem ti, List<String> imgsProcessaveis/*, ExecutorService threadPool*/) {
         this.img = img;
         this.imgsProcessaveis = imgsProcessaveis;
         this.ti = ti;
         //this.threadPool = threadPool;
     }
-
+    
     public void tarefa() {
         Timer timer = null;
         if (timer == null) {
@@ -30,13 +30,10 @@ public class TarefaPeriodica {
                 @Override
                 public void run() {
                     try {
-                            img.tarefaProcuraImg();
-                            img.tarefaMontaListaExecutavel(imgsProcessaveis);
-                            for(int i = 0; i < imgsProcessaveis.size();i++){
-                                String str = imgsProcessaveis.get(i);
-                                TrataImagem.exibeResultado(ti.constroiImg(str));
-                            }
-                            
+//                            img.tarefaProcuraImg();
+//                            img.tarefaMontaListaExecutavel(imgsProcessaveis);
+                        img.tarefasLista(imgsProcessaveis);
+                        
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -46,7 +43,6 @@ public class TarefaPeriodica {
         }
     }
     
-  
 }
 
 /*FAZER COM QUE AS TAREFAS SEJAM SEQUENCIAIS AQUI DENTRO, AO INVÉS DE THREAD?*/

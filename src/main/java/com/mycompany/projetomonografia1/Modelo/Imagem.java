@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Imagem {
 
@@ -29,19 +31,19 @@ public class Imagem {
             listaImgs.add(p.toString());
         }
     }
-    
+
     /*Neste método eu elaboro a string que define o caminho de destino de uma
         imagem. O novo caminho de cada imagem é adicionado a uma nova lista, e 
         apagado do diretório img-. Desta forma eu garanto que cada imagem seja 
         adicionada a uma lista, a qual será analisada, apenas uma vez.*/
-     private void moveToAddList(String str, List<String> novaLista) {
+    private void moveToAddList(String str, List<String> novaLista) {
         int index = str.lastIndexOf("-");
 
         String prefixo = str.substring(0, index - 3);
         String sufixo = str.substring(index + 1);
-        
+
         String nova = prefixo + "AddLista" + sufixo;
-        
+
         File origem = new File(str);
         File destino = new File(nova);
         try {
@@ -53,6 +55,7 @@ public class Imagem {
         System.out.println("img adicionada:" + nova);
         origem.delete();
     }
+
     /*Método responsável por mover uma imagem de um diretório para o outro.*/
     private void copia(File origem, File destino) throws FileNotFoundException, IOException {
         if (destino.exists()) {
@@ -74,35 +77,56 @@ public class Imagem {
             }
         }
     }
+
     /*Este método será o responsável por verificar se há imagens no diretório img-*/
-    public synchronized void tarefaProcuraImg() {       
-        addImgens();        
+    public void tarefaProcuraImg() {
+        addImgens();
         listaImgs.forEach(System.out::println);
         if (!listaEhCheia()) {
             System.out.println("diretório sem imagens!");
         } else {
             System.out.println("diretório tem imagens... notificando");
-           this.notify();
+
         }
     }
-    
+
     /*Este método é reponsável por construir uma lista consistente 
         para a análise de imagens. Ao copiar as imagens da primeira lista,
         a mesma é limpa para que não ocorra NullPointerException*/
     public void tarefaMontaListaExecutavel(List<String> novaLista) {
+
         this.listaImgs.forEach(img -> {
             String str = img;
             moveToAddList(str, novaLista);
         });
         listaImgs.clear();
     }
-   
+
     public boolean listaEhCheia() {
         return !listaImgs.isEmpty();
     }
+
+    public void tarefasLista(List<String> novaLista) throws InterruptedException {
+        /*Para que a imgsProcessaveis não seja manipulada por mais
+          de uma thread, é preciso adicionar novas imagens, somente se a lista
+        estiver vazia, ou seja, não estará sendo manipulada para o envio de requisições.*/
+        synchronized (novaLista) {
+            if (novaLista.isEmpty()) {
+                System.out.println("lista de imgs vazias, vou encher!");
+                tarefaProcuraImg();
+                tarefaMontaListaExecutavel(novaLista);
+                novaLista.notifyAll();
+            } else {
+                System.out.println("lista de imgs cheia, não vou encher!");
+                //this.notifyAll();
+            }
+        }
+
+    }
+
     /*Apaga as imagens analisadas do diretório AddList*/
-    public void apagaImg(String str){
+    public void apagaImg(String str) {
         File diretorio = new File(str);
         diretorio.delete();
-    }    
+    }
 }
