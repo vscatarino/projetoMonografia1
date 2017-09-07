@@ -20,17 +20,18 @@ public class TarefaVision implements Runnable {
     }
 
     @Override
+
     public void run() {
         List<String> listManipula;
 
         while (true) {
 
             synchronized (imgsProcessaveis) {
-                if (imgsProcessaveis.isEmpty()) {
-                    System.out.println("lista de imgs vazias não tem o que processar");
-                    /*Para que a imgsProcessaveis não seja manipulada por mais
+                /*Para que a imgsProcessaveis não seja manipulada por mais
                     de uma thread, é preciso esperar que ela seja preenchida com 
                     imagens para que se faça as requisições*/
+                if (imgsProcessaveis.isEmpty()) {
+                    System.out.println("lista de imgs vazias não tem o que processar");                    
                     try {
                         imgsProcessaveis.wait();
                     } catch (InterruptedException ex) {

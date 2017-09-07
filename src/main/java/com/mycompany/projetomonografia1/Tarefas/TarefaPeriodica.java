@@ -5,10 +5,11 @@ import com.mycompany.projetomonografia1.TrataImagem;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TarefaPeriodica {
-    
+
     Imagem img;
     TrataImagem ti;
     List<String> imgsProcessaveis;
@@ -21,7 +22,7 @@ public class TarefaPeriodica {
         this.ti = ti;
         //this.threadPool = threadPool;
     }
-    
+
     public void tarefa() {
         Timer timer = null;
         if (timer == null) {
@@ -29,20 +30,18 @@ public class TarefaPeriodica {
             TimerTask tarefa = new TimerTask() {
                 @Override
                 public void run() {
+
                     try {
-//                            img.tarefaProcuraImg();
-//                            img.tarefaMontaListaExecutavel(imgsProcessaveis);
+
                         img.tarefasLista(imgsProcessaveis);
-                        
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TarefaPeriodica.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
                 }
             };
             timer.scheduleAtFixedRate(tarefa, TEMPO, TEMPO);
         }
     }
-    
-}
 
-/*FAZER COM QUE AS TAREFAS SEJAM SEQUENCIAIS AQUI DENTRO, AO INVÉS DE THREAD?*/
+}

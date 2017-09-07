@@ -28,7 +28,6 @@ public class Teste {
         TrataImagem ti = new TrataImagem(getVisionService());
 
         List<String> imgsProcessaveis = new ArrayList();
-
         
         new Thread(new TarefaLista(img,imgsProcessaveis)).start();
         new Thread(new TarefaVision(img, ti, imgsProcessaveis)).start();

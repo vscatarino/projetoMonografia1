@@ -110,7 +110,7 @@ public class Imagem {
         /*Para que a imgsProcessaveis não seja manipulada por mais
           de uma thread, é preciso adicionar novas imagens, somente se a lista
         estiver vazia, ou seja, não estará sendo manipulada para o envio de requisições.*/
-        synchronized (novaLista) {
+        synchronized(novaLista) {
             if (novaLista.isEmpty()) {
                 System.out.println("lista de imgs vazias, vou encher!");
                 tarefaProcuraImg();
