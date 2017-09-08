@@ -83,9 +83,9 @@ public class Imagem {
         addImgens();
         listaImgs.forEach(System.out::println);
         if (!listaEhCheia()) {
-            System.out.println("diretório sem imagens!");
+            //System.out.println("diretório sem imagens!");
         } else {
-            System.out.println("diretório tem imagens... notificando");
+            //System.out.println("diretório tem imagens... notificando");
 
         }
     }
@@ -112,12 +112,12 @@ public class Imagem {
         estiver vazia, ou seja, não estará sendo manipulada para o envio de requisições.*/
         synchronized(novaLista) {
             if (novaLista.isEmpty()) {
-                System.out.println("lista de imgs vazias, vou encher!");
+                //System.out.println("lista de imgs vazias, vou encher!");
                 tarefaProcuraImg();
                 tarefaMontaListaExecutavel(novaLista);
                 novaLista.notifyAll();
             } else {
-                System.out.println("lista de imgs cheia, não vou encher!");
+                //System.out.println("lista de imgs cheia, não vou encher!");
                 //this.notifyAll();
             }
         }

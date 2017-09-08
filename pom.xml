@@ -26,22 +26,7 @@
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-vision</artifactId>
             <version>v1-rev360-1.22.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>3.2.0</version>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-            </plugin>
-        </plugins>
-    </build>
+        </dependency>        
+    </dependencies>    
     <name>projetoMonografia1</name>
 </project>
